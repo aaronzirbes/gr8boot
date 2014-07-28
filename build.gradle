@@ -7,11 +7,13 @@ targetCompatibility = '1.6'
 
 version = "${version}"
 group = "${group}"
-mainClassName = "sample.SampleApplication"
+mainClassName = "org.zirbes.SampleApplication"
 
 buildscript {
     ext {
         springBootVersion = '1.0.1.RELEASE'
+        groovyVersion = '2.2.1'
+        spockVersion = '1.0-groovy-2.0-SNAPSHOT'
     }    
     repositories {
         mavenCentral()
@@ -27,7 +29,10 @@ jar {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
+    // Spock snapshots are available from the Sonatype OSS snapshot repository
+    maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 dependencies {
@@ -35,6 +40,11 @@ dependencies {
     compile 'org.codehaus.groovy:groovy'
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-actuator'
+    compile 'com.netflix.rxjava:rxjava-core:0.19.6'
+    compile "org.codehaus.groovy:groovy:${groovyVersion}"
+    compile "org.codehaus.groovy:groovy-templates:${groovyVersion}"
+
+    testCompile "org.spockframework:spock-core:${spockVersion}"
     testCompile 'org.springframework.boot:spring-boot-starter-test'
 }
 

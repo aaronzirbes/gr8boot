@@ -1,14 +1,6 @@
-# Spring Boot Actuator Sample
+# Spring Boot "Have a nice day" test app
 
-You have just created a simple Spring Boot project in Groovy incorporating the
-Actuator. This includes everything you need to run the application. In this
-case, that's a simple JSON endpoint.
-
-In this project you get:
-
-* A Gradle build file
-* An application class, `SampleApplication`, implementing a single JSON endpoint
-* A JUnit test case for `SampleApplication`
+* Just playing around with spring boot and Java Rx Observables
 
 You can build and run this sample using Gradle (>1.6):
 
