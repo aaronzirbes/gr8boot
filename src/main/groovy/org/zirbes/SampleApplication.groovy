@@ -15,15 +15,16 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class SampleApplication {
 
-	@RequestMapping("/")
-	def helloWorld() {
-        LocalDate today = new LocalDate()
+    @RequestMapping("/")
+    def helloWorld() {
+        LocalDate localToday = new LocalDate()
+        Date today = localToday.toDate()
 
-		[message: "Hello Gr8conf", author: "Spring Boot", timestamp: today]
-	}
+        return [message: "Hello Gr8conf", author: "Spring Boot", timestamp: today]
+    }
 
-	static void main(String[] args) throws Exception {
-		SpringApplication.run(SampleApplication.class, args)
-	}
+    static void main(String[] args) throws Exception {
+        SpringApplication.run(SampleApplication.class, args)
+    }
 
 }

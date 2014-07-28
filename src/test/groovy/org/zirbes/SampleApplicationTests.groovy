@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package sample
+package org.zirbes
 
 import static org.junit.Assert.assertEquals
 import static org.junit.Assert.assertFalse
@@ -59,66 +59,66 @@ import org.springframework.web.client.RestTemplate
  */
 public class SampleApplicationTests {
 
-	private static ConfigurableApplicationContext context
+    private static ConfigurableApplicationContext context
 
-	@BeforeClass
-	public static void start() throws Exception {
-		Future<ConfigurableApplicationContext> future = Executors
-				.newSingleThreadExecutor().submit(
-						new Callable<ConfigurableApplicationContext>() {
-							@Override
-							public ConfigurableApplicationContext call() throws Exception {
-								return SpringApplication
-										.run(SampleApplication.class)
-							}
-						})
-		context = future.get(60, TimeUnit.SECONDS)
-	}
+    @BeforeClass
+    public static void start() throws Exception {
+        Future<ConfigurableApplicationContext> future = Executors
+                .newSingleThreadExecutor().submit(
+                        new Callable<ConfigurableApplicationContext>() {
+                            @Override
+                            public ConfigurableApplicationContext call() throws Exception {
+                                return SpringApplication
+                                        .run(SampleApplication.class)
+                            }
+                        })
+        context = future.get(60, TimeUnit.SECONDS)
+    }
 
-	@AfterClass
-	public static void stop() {
-		if (context != null) {
-			context.close()
-		}
-	}
+    @AfterClass
+    public static void stop() {
+        if (context != null) {
+            context.close()
+        }
+    }
 
-	@Test
-	void testHome() throws Exception {
-		@SuppressWarnings("rawtypes")
-		ResponseEntity<Map> entity = getRestTemplate().getForEntity(
-				"http://localhost:8080", Map.class)
-		assertEquals(HttpStatus.OK, entity.getStatusCode())
-		@SuppressWarnings("unchecked")
-		Map<String, Object> body = entity.getBody()
-		assertEquals("Hello World", body.get("message"))
-	}
+    @Test
+    void testHome() throws Exception {
+        @SuppressWarnings("rawtypes")
+        ResponseEntity<Map> entity = getRestTemplate().getForEntity(
+                "http://localhost:8080", Map.class)
+        assertEquals(HttpStatus.OK, entity.getStatusCode())
+        @SuppressWarnings("unchecked")
+        Map<String, Object> body = entity.getBody()
+        assertEquals("Hello World", body.get("message"))
+    }
 
-	@Test
-	void testErrorPageDirectAccess() throws Exception {
-		@SuppressWarnings("rawtypes")
-		ResponseEntity<Map> entity = getRestTemplate().getForEntity(
-				"http://localhost:8080/error", Map.class)
-		assertEquals(HttpStatus.OK, entity.getStatusCode())
-		@SuppressWarnings("unchecked")
-		Map<String, Object> body = entity.getBody()
-		assertEquals("None", body.get("error"))
-		assertEquals(999, body.get("status"))
-	}
+    @Test
+    void testErrorPageDirectAccess() throws Exception {
+        @SuppressWarnings("rawtypes")
+        ResponseEntity<Map> entity = getRestTemplate().getForEntity(
+                "http://localhost:8080/error", Map.class)
+        assertEquals(HttpStatus.OK, entity.getStatusCode())
+        @SuppressWarnings("unchecked")
+        Map<String, Object> body = entity.getBody()
+        assertEquals("None", body.get("error"))
+        assertEquals(999, body.get("status"))
+    }
 
-	private String getPassword() {
-		return context.getBean(SecurityProperties.class).getUser().getPassword()
-	}
+    private String getPassword() {
+        return context.getBean(SecurityProperties.class).getUser().getPassword()
+    }
 
-	private RestTemplate getRestTemplate() {
+    private RestTemplate getRestTemplate() {
 
-		RestTemplate restTemplate = new RestTemplate()
-		restTemplate.setErrorHandler(new DefaultResponseErrorHandler() {
-			@Override
-			public void handleError(ClientHttpResponse response) throws IOException {
-			}
-		})
-		restTemplate
+        RestTemplate restTemplate = new RestTemplate()
+        restTemplate.setErrorHandler(new DefaultResponseErrorHandler() {
+            @Override
+            public void handleError(ClientHttpResponse response) throws IOException {
+            }
+        })
+        restTemplate
 
-	}
+    }
 
 }
